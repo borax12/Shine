@@ -11,3 +11,4 @@ Application to understand android platform specifics
 6. Making use of Custom Fragment Layouts
 7. Activating ability to add options to menu of a Fragment
 8. Logging - verbose for debugging and error logging
+9. Intents and putExtra to send messages to recipent class , recieving intents and extracting messages 
