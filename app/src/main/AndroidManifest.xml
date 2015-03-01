@@ -3,7 +3,7 @@
     package="borax12.com.shine" >
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -34,6 +34,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="borax12.com.shine.MainActivity" />
         </activity>
+        
+        <provider
+            android:authorities="borax12.com.shine.app"
+            android:name=".data.WeatherProvider"/>
 
     </application>
 
