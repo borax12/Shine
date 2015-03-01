@@ -53,4 +53,9 @@ Application to understand android platform specifics
 
 26. for testing the creation fo the database and the tables , you would add lets say a testCreateDb method in the testdb class and in that you would make a hashset of strings with the table names added to it , then you would get a new writeable databse from the weatherdbhelper - weatherDBHelper(this.mcontext).getWriteableDatabse(), the check that this databse isOpen in an assertEquals(true,db.isOpen()) and now to check that the tables are crteated in this particular databse or not-  for this check 27
 
-27. Curosr c= db.rawQuery(Select name from sqlite_master where type='table' ,null) 
+27. Curosr c= db.rawQuery(Select name from sqlite_master where type='table' ,null) the cursor is basially a resultset from a query and then to check if this returns something valid or not - doa  assertTrue("This means the tables are not crated",c.moveToFirst()); and then verify the tables do(tablename hashset.remove(c.getString(0))while(c.moveToNext) - this 0th column gives the name of the table from the result retured from the rawQuery
+
+28. now for checking if the coloums are made correctly - do a curosr c = db.rawQuery(PRAGMA table_info(tablename),null) and again check validity of even working properly using c.moveToFirst in an assertTrue, and then make a hashset of the coloumn names and then using the column value of a coulumn called name in the table returend from that pragma command keep removing from the hashset the same columns 
+
+29. closing the db and curosr is immportant - c.close, db.close
+
