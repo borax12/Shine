@@ -60,3 +60,9 @@ Application to understand android platform specifics
 29. closing the db and curosr is immportant - c.close, db.close
 
 30. Now if you want to test whether let say weather table values - you do the following , you get the contentvalues and then make a dbhelper object and get a writeable databse and then you insert values and then check if the returned row id is not equal to -1 , and then make a cursor point to the result set returned from a query which selects the projection to be returned from the table (After insertionof values ) and then assertTrue that it is a valid result returned by cursor.moveToFirst and then validate current record by your own validate record function which would basically take the curosr and the expected value content values object and then it will take a Set of map entries of a string - column name and the value of that coloumn and it will store the valuesset returned from the expectedvalues - expectedvalues.valueset and the for every map entry from the value set it will take the key value - that is coloumn name, find out the index of that particular coloumn using curosr.getcoloumnindex(coloumnname) and then assertEquals that expectedvalue.getvalue and the curosr.getString(coloumnIndex) 
+
+31. Content Providers can be used to effectively update data to the ui , while being connected to a data source , the advantage of using the content provider is that we can leverage the functionality of other android classes like SyncAdapter and cursorAdapters or loaders whihc all use a content provider , also it opens up the data of our app to other apps
+
+32. To first of all read a content provider , standard content providers , you have to add the permission that it uses the data eg ANDROID.permission.READ_USER_DICTIONARY
+
+33. Then a content Resolver is used as a middlemena to get a cursoor and thatn
