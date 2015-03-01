@@ -47,4 +47,10 @@ Application to understand android platform specifics
 
 23. the dbhelper class whll take the context in the constructor - WeatherDBHelper(context context) { super(contenxt, database_name,null,database_Version),and it will also need an onCreate method which has the SqliteDatabase as an argument , which will create the table - the craete table string will be store in a final static string and the sqlitedatabase.execsql will be called with the statement , then there is also the onUpgrade method which takes the databse and also the verion int , new and old , so that its called when a new version code is established for the database , basically you should drop the old tables and create new ones 
 
-24. For making test cases , extend android testcase and you can additionally overrride the setup method and tearDown method , for running all the 
+24. For making test cases , extend android testcase and you can additionally overrride the setup method and tearDown method , for running all the testcases you can make a full test suite calss extend the TestSuite class and just in the constructor call TestSuiteBuilder(customfulltestsuiteclass.class).includeAllPackagesUnderHere().build)_ 
+
+25. In an example testDB class that will test the databse , in the setup() method , delete the databse and do this by the presenet mContext variable - mcontext.deletedatabse(databsename) 
+
+26. for testing the creation fo the database and the tables , you would add lets say a testCreateDb method in the testdb class and in that you would make a hashset of strings with the table names added to it , then you would get a new writeable databse from the weatherdbhelper - weatherDBHelper(this.mcontext).getWriteableDatabse(), the check that this databse isOpen in an assertEquals(true,db.isOpen()) and now to check that the tables are crteated in this particular databse or not-  for this check 27
+
+27. Curosr c= db.rawQuery(Select name from sqlite_master where type='table' ,null) 
