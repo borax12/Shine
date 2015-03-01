@@ -41,3 +41,7 @@ Application to understand android platform specifics
 
 19. Activity life cycle - OnCreate - onStart -OnREsume- OnPause-OnSTop- ONdestroy
 20.                     - OnCreate - onStart -OneResume- OnPause-OnStop-OnDestroy-OnCreate-OnStart-On-Resume (if activity configuration changes that is )
+
+21. Android provides a callback to rebuild the app statue -- its onSaveInstanceState and onRestoreinstanceState
+22. So generally speaking the classes you neeed in your app to handle databases ,- is a Contract class with subclasses pointing to the various tables you have in the database ,it should have the couloumn names in it as a static string , its just an agreement between views and data model , then you need a DBHelper class which extends SqliteOpenHelper which helps in creation of DB and initializing of database and also the versioning of the database
+
