@@ -1,6 +1,7 @@
 package borax12.com.shine.data;
 
 import android.content.ComponentName;
+import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.pm.PackageManager;
@@ -59,12 +60,12 @@ public class TestProvider extends AndroidTestCase {
     }
 
 
-    /*
-           This test doesn't touch the database.  It verifies that the ContentProvider returns
+
+/*           This test doesn't touch the database.  It verifies that the ContentProvider returns
            the correct type for each type of URI that it can handle.
            Students: Uncomment this test to verify that your implementation of GetType is
-           functioning correctly.
-        */
+           functioning correctly.*/
+
     public void testGetType() {
         // content://com.example.android.sunshine.app/weather/
         String type = mContext.getContentResolver().getType(WeatherEntry.CONTENT_URI);
@@ -122,11 +123,11 @@ public class TestProvider extends AndroidTestCase {
         TestUtilities.validateCursor("testBasicWeatherQuery", weatherCursor, weatherValues);
     }
 
-    /*
-        This test uses the database directly to insert and then uses the ContentProvider to
+
+/*        This test uses the database directly to insert and then uses the ContentProvider to
         read out the data.  Uncomment this test to see if your location queries are
-        performing correctly.
-     */
+        performing correctly.*/
+
     public void testBasicLocationQueries() {
         // insert our test records into the database
         WeatherDbHelper dbHelper = new WeatherDbHelper(mContext);
@@ -155,10 +156,10 @@ public class TestProvider extends AndroidTestCase {
         }
     }
 
-    /*
-        This test uses the provider to insert and then update the data. Uncomment this test to
-        see if your update location is functioning correctly.
-     */
+
+/*        This test uses the provider to insert and then update the data. Uncomment this test to
+        see if your update location is functioning correctly.*/
+
     public void testUpdateLocation() {
         // Create a new map of values, where column names are the keys
         ContentValues values = TestUtilities.createNorthPoleLocationValues();
@@ -440,10 +441,10 @@ public class TestProvider extends AndroidTestCase {
         cursor.close();
     }
 
-    /*
-        This test checks to make sure that the content provider is registered correctly.
-        Students: Uncomment this test to make sure you've correctly registered the WeatherProvider.
-     */
+
+/*        This test checks to make sure that the content provider is registered correctly.
+        Students: Uncomment this test to make sure you've correctly registered the WeatherProvider.*/
+
     public void testProviderRegistry() {
         PackageManager pm = mContext.getPackageManager();
 
@@ -466,7 +467,6 @@ public class TestProvider extends AndroidTestCase {
                     false);
         }
     }
-
 
 
 }
