@@ -85,3 +85,13 @@ Application to understand android platform specifics
 
 42. In our contentProvider we also need a uri matcher , so a buildUriMatcher static method can be implemented which can the UriMatcher instantiated and then we add the matcher uri patters by matcher.addURI(authority,path+"/*", returncode when match)
 
+43. To make joins in tables you can use SQLiteQueryBuilder to instatitae a new SQliteQueryBuilder object adnd then do a setTables(Tablename +"INNER JOIN"+Tablename+"ON"+Condition)
+
+44. To build a content provider , you need to implement , on create , getType, query , insert, delete, update , shutdown
+
+45. In the oncreate method of the contentprovider , you can instantiate , the dbHelper Object 
+
+46. In the GetType(Uri uri) method , get a int match code for a urimatcher.match(uri), then pass the matchcode in a switch case, do the cooresponding task for each return code return the appropiate return code 
+
+47. In the query method whcih returns curosr  - curosr query(uri, string[] orojection,string selection, string selection args,sortorder), then call match function of the uri matcher in a swtich function and 
+
