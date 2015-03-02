@@ -93,5 +93,11 @@ Application to understand android platform specifics
 
 46. In the GetType(Uri uri) method , get a int match code for a urimatcher.match(uri), then pass the matchcode in a switch case, do the cooresponding task for each return code return the appropiate return code 
 
-47. In the query method whcih returns curosr  - curosr query(uri, string[] orojection,string selection, string selection args,sortorder), then call match function of the uri matcher in a swtich function and 
+47. In the query method whcih returns curosr  - curosr query(uri, string[] orojection,string selection, string selection args,sortorder), then call match function of the uri matcher in a swtich function and the according to the return codes, just call the query method of the dbhelper object .getReadableDatabase or the SqliteQueryBuilder Object query method with the given arguments ,
+
+48. In the insert method, call the insert command of the dbhelper and then get the reutrned row id of the insert row and then also getContext.getContentResolver.notfiyChange(Uri,null) to notify the sending uri that the data has been changed 
+
+49. For the delete method , just overrride the bulkInsert metehod that takes a uri , and content values array , and then just keep inserting the rows based on the match return coe and for this , it has to be done between the db.beginTransaction and the db.setTransactionSuccesful() method 
+
+50. 
 
