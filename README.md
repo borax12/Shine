@@ -75,4 +75,10 @@ Application to understand android platform specifics
 
 37. So  we update the contract to include the content authroity , and then have the base uri as the content:// and content authority passed to Uri.parse("content://"+content_authority
 
-38. 
+38. To build the uri for the content uri you can use the base content uri and then builUpon().appendPath(path).build 
+
+39. android returns dir item type for curosrs which return more than one rows and itemtype for curosr which return one record
+
+40. So we need to make a string called contenttype  which we can get from the ContentResolver.CURSOR_DIR_TYPE+"/"+Content_authrity+pathlocation, 
+
+41. You can also have standard static methods in the contract entity class which builds the uris for you , takes a paramter , then either use ContentUris.withAppendedId(Content_uri,id), or uses Contenturi.buildUpon().appendPath(path).build or contenturi.buildUpon().appendQueryParamter(query,value).build();
