@@ -65,4 +65,10 @@ Application to understand android platform specifics
 
 32. To first of all read a content provider , standard content providers , you have to add the permission that it uses the data eg ANDROID.permission.READ_USER_DICTIONARY
 
-33. Then a content Resolver is used as a middlemena to get a cursoor and thatn
+33. Then a content Resolver is used as a middlemena to get a cursoor and that and that curosor is an iterarotr of a a query function on the database , , we do a resolver.query(content ui,selection, selection args,group by , having , sort order) this to get a cursor 
+
+34.  The content uro is like content://user-dictionary/words where content://is just a protocl and the user-dictionary is a content authority , generally the best practice is to use package name as an autority name. 
+
+35.   A curosr adapter hooks with a curosr and can be used to upadte views like a listview , for this you need two arrays , one string array of the columns to bind with , where the values will come from the curosr and the layout fields to fill the data with , so a simple cursor adapter can be initialized with simpleCursorAdapter(this,layout of textview per list item, curosr , string[] from , int[] to), and then listview.setadapter(---)
+
+36. Going on to building a content provider  , we will need 
