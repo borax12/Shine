@@ -103,3 +103,8 @@ Application to understand android platform specifics
 
 51. To test if a notifcation uri ahs been set or not , we do an assertEquals(locationCursor.getNotificationUri,ContentURI), available after api level 19 , so put this in an if (BuildVersion.SDK_INT>19)
 
+52. DatabaseUtils.cursorRowToContentValues(cur,contentValues) moves all the data at the curor current record to content values object in order
+
+53. To clean up tests so that other tests can use the content proiver - getContext().getContentProviderClient(ContentURI).getLocaLcontentProvider().shutdown();
+
+54. A ContentObserver class can be made that basically has a HandlerThread and a boolean for mContentHasChanged , this class can be used to check if the update method actually notifies the uri if the data has been updated or not , this class will have a static method to get the TestContentObserver and in that you will create a new HandlerThread and start it and return a TestContentObserver(handlerThraed object) which as a constructor takes the handlerThread object and calls the super(ht.getLooper) and assigns the private member HandlerThread object to this passed HandlerThread,  the test
