@@ -71,4 +71,8 @@ Application to understand android platform specifics
 
 35.   A curosr adapter hooks with a curosr and can be used to upadte views like a listview , for this you need two arrays , one string array of the columns to bind with , where the values will come from the curosr and the layout fields to fill the data with , so a simple cursor adapter can be initialized with simpleCursorAdapter(this,layout of textview per list item, curosr , string[] from , int[] to), and then listview.setadapter(---)
 
-36. Going on to building a content provider  , we will need 
+36. Going on to building a content provider  , we will need  to determine the uris the app will support , update the contract to include the uris and fill out the uri matcher to support the new uris and also implement the various functions a content provider has like query , insert , update , delete , bulkinsert 
+
+37. So  we update the contract to include the content authroity , and then have the base uri as the content:// and content authority passed to Uri.parse("content://"+content_authority
+
+38. 
