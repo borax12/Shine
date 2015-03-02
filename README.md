@@ -99,5 +99,7 @@ Application to understand android platform specifics
 
 49. For the delete method , just overrride the bulkInsert metehod that takes a uri , and content values array , and then just keep inserting the rows based on the match return coe and for this , it has to be done between the db.beginTransaction and the db.setTransactionSuccesful() method 
 
-50. 
+50. To test if the manifest file contains the said provider info , get the packagemanager from the mcontext and then the compnonentName - compnonentName = New ComponentName(mcontext.getPackacgName,weatherProvider.class.getName), thena in a try block do a providerInfo = pm.getProviderInfo(componentname,0) amd then assertEquals(providerInfo.authority,WeatherContract.AUTHORITY)
+
+51. To test if a notifcation uri ahs been set or not , we do an assertEquals(locationCursor.getNotificationUri,ContentURI), available after api level 19 , so put this in an if (BuildVersion.SDK_INT>19)
 
