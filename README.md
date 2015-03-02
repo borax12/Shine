@@ -110,3 +110,23 @@ Application to understand android platform specifics
 54. A ContentObserver class can be made that basically has a HandlerThread and a boolean for mContentHasChanged , this class can be used to check if the update method actually notifies the uri if the data has been updated or not , this class will have a static method to get the TestContentObserver and in that you will create a new HandlerThread and start it and return a TestContentObserver(handlerThraed object) which as a constructor takes the handlerThread object and calls the super(ht.getLooper) and assigns the private member HandlerThread object to this passed HandlerThread,  the testContentObserver class also has to ovverride  the onChange(boolean selfChange,Uri uri) method where it will set the boolean contentHasChanged to true on the dataset being changed when it is associated to a cursor, it can also have a waitfornotificationorFail method which will use the PollingCheck to further check for contentChange till a given amount of time , lets say 5 seconds 
 
 55. the curosr will reguster tge contentObserver and then update or delete the records and then waitfornotificationorfail is called with the contentObserver and the unregister the content observer and close the curosr 
+
+56. Loaders are a best practice method of loading data asynchronsously , asynctaskLoader is a loader that uses the asynctask behind the scenes to do its work , and the CursorLoader is an implementation of that specifically designed to work with content providers and return cursors 
+
+57. Loaders have a loader id that they register with a loadermanager and the lifecycle of a loader is - oneCreate - InitLoader, oneCreaeteLoader, LoadinBackground, onLoadFinished
+
+58. the custom cursor adapter needs a bindview function that takes the view returned from the new mthod and the context and the curosr received , the curosr adapter new view method basically takes the view to duplicate when adding entries to the associated listview 
+
+59. On to creating the loading id , one activity can use multiple loaders designated by diffeernt ids , , we will need to implement the LoaderCallbacks<Cursor> class to use loader in any activity 
+
+60. Also it would require ovverrding onCreateLoader(int i , bundle bundle) to return a new CursorLoader(Context,uri, projection,selection,selection args, sortOrder) - this will in turn use the content provider to run a query 
+
+61. Also overriding the onLoadfinished which takes the Loader<Cursor> and the cursor , perform the updates to the UI and then cursorAdapter.swapCursor(cursor)  - ie the newly upadted cursor values
+
+62. On LoaderReset takes the loader and the cursoradapter.swapCursor(null) - destory all references ot our curosr loader 
+
+63. To initialize the loader , get the loaderManager .initLoader(loader id, bundle)
+
+64. Fragment tags are used to tag a fragment auwithin the fragmentManager so we can easily find the fragment
+
+
