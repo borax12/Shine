@@ -81,4 +81,7 @@ Application to understand android platform specifics
 
 40. So we need to make a string called contenttype  which we can get from the ContentResolver.CURSOR_DIR_TYPE+"/"+Content_authrity+pathlocation, 
 
-41. You can also have standard static methods in the contract entity class which builds the uris for you , takes a paramter , then either use ContentUris.withAppendedId(Content_uri,id), or uses Contenturi.buildUpon().appendPath(path).build or contenturi.buildUpon().appendQueryParamter(query,value).build();
+41. You can also have standard static methods in the contract entity class which builds the uris for you , takes a paramter , then either use ContentUris.withAppendedId(Content_uri,id), or uses Contenturi.buildUpon().appendPath(path).build or contenturi.buildUpon().appendQueryParamter(query,value).build(); or use  return Uri.getPathSegments().get(1)
+
+42. In our contentProvider we also need a uri matcher , so a buildUriMatcher static method can be implemented which can the UriMatcher instantiated and then we add the matcher uri patters by matcher.addURI(authority,path+"/*", returncode when match)
+
