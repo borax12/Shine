@@ -129,4 +129,17 @@ Application to understand android platform specifics
 
 64. Fragment tags are used to tag a fragment auwithin the fragmentManager so we can easily find the fragment
 
+65. to MAKE THE CONTENT PROVIDER Accessible to the other apps , just add the exported true attribute of the provdier and the permision needed if requireed 
+
+66. using xliff:g tags to format a string in the strings.xml file and then calling context.getString(format,args) to display or set it toa  view ,
+
+67. To set the adapter to handle more than one view types , just add the current number of view types to handle in the overriden getViewTypeCount fucntion , and then ovverride the getItemViewType function that takes the position as arg and then returns the correct integer as per the view type , then in the new view method of the cursor adapter , just return the correct view 
+
+68. To avoid unnecceasay findviewby ids , just load the views earlier itself either in a seperate ViewHolder class or in the onCreate method , the viewHolder object can be attached to the view that lets say the newview method returns using the view.setTag(viewholder object) method and then later the viewholder can be retrieved using the view.getTag method and then that viewholder object can be used to set text or resources on to the views stored inside the viewholder obkect (member variables)
+
+69. Scrollviews can be used to keep scrolling items when the items dont fit on the screen 
+
+70. use the weight attribute to specify distribution of layout and keep the width as 0dp 
+
+71. Always keep UI tree shallow and wide. not more than 10 nested views and not more than 80 in total . use the hierrarchy viewer and also run lint inspection 
 
