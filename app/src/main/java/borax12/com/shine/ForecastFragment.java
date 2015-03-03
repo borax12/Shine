@@ -55,6 +55,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     static final int COL_COORD_LONG = 8;
 
     private ForecastAdapter mforecastAdapter;
+    private String mLocation;
 
     public ForecastFragment() {
     }
@@ -119,6 +120,14 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mLocation != null && !mLocation.equals(Utility.getPreferredLocation(getActivity()))) {
+            getLoaderManager().restartLoader(FORECAST_LOADER, null, this);
+        }
+    }
+
     private void updateWeather() {
 
         FetchWeatherTask weatherTask = new FetchWeatherTask(getActivity());
@@ -136,6 +145,8 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         String locationSetting = Utility.getPreferredLocation(getActivity());
+
+        mLocation = Utility.getPreferredLocation(getActivity());
 
         String sortOrder = WeatherContract.WeatherEntry.COLUMN_DATE + " ASC";
 

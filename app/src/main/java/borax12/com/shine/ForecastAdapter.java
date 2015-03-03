@@ -64,10 +64,23 @@ public class ForecastAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
 
-        int weatherId = cursor.getInt(ForecastFragment.COL_WEATHER_ID);
-
         ViewHolder viewHolder = (ViewHolder) view.getTag();
 
+        int viewType = getItemViewType(cursor.getPosition());
+
+        switch (viewType){
+            case VIEW_TYPE_TODAY: {
+                viewHolder.iconView.setImageResource(Utility.getArtResourceForWeatherCondition(cursor.getInt(ForecastFragment.COL_WEATHER_CONDITION_ID)));
+                break;
+            }
+
+            case VIEW_TYPE_FUTURE_DAY:{
+                viewHolder.iconView.setImageResource(Utility.getIconResourceForWeatherCondition(
+                        cursor.getInt(ForecastFragment.COL_WEATHER_CONDITION_ID)));
+                break;
+            }
+
+        }
         viewHolder.iconView.setImageResource(R.mipmap.ic_launcher);
 
         // Read date from cursor
