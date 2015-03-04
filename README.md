@@ -186,4 +186,4 @@ Application to understand android platform specifics
 
 92. Some other properties are textSize, textColor , layout-gravity and minWidth and font-family 
 
-93. For accesibilty checlist - always add
+93. For accesibilty checlist - always add contentDescription iof uimages /iconsViews
