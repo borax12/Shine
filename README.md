@@ -143,3 +143,23 @@ Application to understand android platform specifics
 
 71. Always keep UI tree shallow and wide. not more than 10 nested views and not more than 80 in total . use the hierrarchy viewer and also run lint inspection 
 
+72. REsource folder qualifiers like sw600dp  like values-sw600dp , 
+
+73. Why its not advisable to create one single activity with many fragmetns as it increases the complexit . intent handling difficult and risk of tight coupling 
+
+74. Fragment lifecycle - onCreate - OnCreateView- OnActivityCreated - OnStart - On Resume - OnPause - OnStop - OnDestroy View- On Destroy - Onattach - On Create 
+
+75. You should clean up resources in the OnDestroyView callback 
+
+76. To replace a fragment in the container in the activyt , use getSupportFragmentManager.beginTransaction.replace(R.id.container,new Fragment(),Tag).commit - the tag is used to find the same instantiated fragment later 
+
+77. Fragments can also retain UI , in the onCreate(Bundle savedInstanceState) - do a setRetainState(True) this will retain data on device configuration changes amd if you want this to be a nonUI fragment , make the onCreateView return null 
+
+78. When making a two pane layout , we give the loaders in the detailed view fragment the ability to handle null uris as when the app is loaded at first , there is no uri given , ie the intent.data is null
+
+79. Its not good to assume that a particular activity is the handling activity for that fragment , its always advisable to use the callback method to intimate parent activty of anything 
+
+80. its not advised to create parameterised constructors of fragments to pass data to form the fragment obnject programmatically , as on device configration change when the fragment restarts the android system wont know what arguments to pass , so its rather advisable to setargs to a bundle(key value paris) in the method onSaveInstanceState , remember the bundle savedInstanceState that is by default present can be populated dusring runtime but the other bundles
+
+81. How to make an activity listen to fragment clicks - make a public intrface callback in the fragment with the onItemClick signature as the member function ot that interface and then make the activity implement the callback and then describe the onItemclick function there , , one example being , put the Uri passed from the fragment on the click and then bundle it and then pass it to the detailed view fragment , and ask the fragment manager to replace the container with this detail fragment 
+.In the itemclick listener of the fragment (callback)getActivty.
