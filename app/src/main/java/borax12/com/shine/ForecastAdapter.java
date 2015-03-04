@@ -97,6 +97,8 @@ public class ForecastAdapter extends CursorAdapter {
         // Read weather forecast from cursor
         String description = cursor.getString(ForecastFragment.COL_WEATHER_DESC);
 
+        viewHolder.iconView.setContentDescription(description);
+
         viewHolder.descriptionView.setText(description);
 
         boolean isMetric = Utility.isMetric(context);
