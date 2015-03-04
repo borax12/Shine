@@ -173,3 +173,9 @@ Application to understand android platform specifics
 85. for making the list have a single choice selection only , make the listview use a style whihch has the item <item android:choicemode>singlechoice</item>
 
 86. to save the scroll position on device change /rotation, make a key string , then in item click of the listview in the fragment onCreateView , if the savedInstance is not null and contains that key string , just store the position of the item click in a member variable , also in the onSaveInstanceState method , put the member position varibale in the bundle , and now when  loader has finished loading the data ,that is on the onLoadFinished , do a listview.smoothscrolltoposition(mposition)
+
+87. You can also do a layout alisasing , bu making a refs.xml file inn lets say teh values-land folder and then making a resource with an item of type layout and name as the same id as made in the original layout you wanted to reference for this landscape orientation also ,  eg <item type = layout  name=fragment_detail >@layout_fragment_detail_wide</item>
+
+88. In the lollipop items in style.xml , you can a item="colorPrimary. and item - colorPrimaryDark for the action bar and staus bar color , also you can further customize action bar by making the actionBarStyle property of the style tag of yor theme , refer to a custom action bar style tag whihc has a parent of @style/Widget.appCompat.light.actionBar.solid.Inverse and then in the action bar tag use things like item name - displayOptions - useLogo|showHome and then also , use item name - logo refer a to a drawable 
+
+89. for making the action bar not cast a shadwo , use the getSupportActionBar().setElevation(0f)
