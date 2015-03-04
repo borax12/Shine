@@ -179,3 +179,11 @@ Application to understand android platform specifics
 88. In the lollipop items in style.xml , you can a item="colorPrimary. and item - colorPrimaryDark for the action bar and staus bar color , also you can further customize action bar by making the actionBarStyle property of the style tag of yor theme , refer to a custom action bar style tag whihc has a parent of @style/Widget.appCompat.light.actionBar.solid.Inverse and then in the action bar tag use things like item name - displayOptions - useLogo|showHome and then also , use item name - logo refer a to a drawable 
 
 89. for making the action bar not cast a shadwo , use the getSupportActionBar().setElevation(0f)
+
+90. for values-v14 for the action bar - make the style parent refer to @android/Style/Theme.Holo.Light.DarkActionBar and thne in the actionBarstyle refer to a another tag which refers . widget.Holo.Light.actionBar.solid.Inverse and the baground property in the item in the tag to be a color and height of the actionbar , 
+
+91. use ?android:attr:textApperanceLarge where a large text is needed= 22sp amd the textAppearanceSmall where the 14 sp size is needed 
+
+92. Some other properties are textSize, textColor , layout-gravity and minWidth and font-family 
+
+93. For accesibilty checlist - always add
