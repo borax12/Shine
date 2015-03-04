@@ -162,4 +162,14 @@ Application to understand android platform specifics
 80. its not advised to create parameterised constructors of fragments to pass data to form the fragment obnject programmatically , as on device configration change when the fragment restarts the android system wont know what arguments to pass , so its rather advisable to setargs to a bundle(key value paris) in the method onSaveInstanceState , remember the bundle savedInstanceState that is by default present can be populated dusring runtime but the other bundles
 
 81. How to make an activity listen to fragment clicks - make a public intrface callback in the fragment with the onItemClick signature as the member function ot that interface and then make the activity implement the callback and then describe the onItemclick function there , , one example being , put the Uri passed from the fragment on the click and then bundle it and then pass it to the detailed view fragment , and ask the fragment manager to replace the container with this detail fragment 
-.In the itemclick listener of the fragment (callback)getActivty.
+.In the itemclick listener of the fragment (callback)getActivty.onItemSelected(pass the uri  or something ) 
+
+82. You can retreieve the bundled arguments using Bundle arguments - getArguments m and the parse the uri as arguments.getParceable(the string key) 
+
+83. If the detail activity should save its instance when settings is launched and the back button is preseed , we add this to the setting activity - works with target api > 16 (jellybean)  Override - intent getParentActivityIntent ( return super.getParentAcitvitIntent().addFlags(INTENT_FLAG_ACTIVITY_CLEAR_TOP) this flag will check if the parent activity is alreading running in the task and it willuse that over than craeting a new one 
+
+84. For shwoing different states in a listview item on being either pressed, activated or long pressed , we define the selector states in an XML file in the drawable folder - lets say for api 21 - we can have a selector with the items in the android :state_pressed:true as a rippple witha  specified color , tht other states are - state_activated:true , finally add the selector drawable in the android:background to the layout root which has that listItem for which states are defined 
+
+85. for making the list have a single choice selection only , make the listview use a style whihch has the item <item android:choicemode>singlechoice</item>
+
+86. to save the scroll position on device change /rotation, make a key string , then in item click of the listview in the fragment onCreateView , if the savedInstance is not null and contains that key string , just store the position of the item click in a member variable , also in the onSaveInstanceState method , put the member position varibale in the bundle , and now when  loader has finished loading the data ,that is on the onLoadFinished , do a listview.smoothscrolltoposition(mposition)
