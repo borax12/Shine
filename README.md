@@ -203,4 +203,8 @@ Application to understand android platform specifics
 100. So essentially the component we wake in the app by alarms is a braodcast reiever , 
 
 101. Alarms take advantage of a new Intent called pending Intent , the pending intent gives permision to send data with the same ppplication id as the one sending the intent , and it does this in a asnychornous way m the pending intent talks to the broadcast reciever with the help of alarm manager 
-102. 
+
+102. So for this , make a custom AlarmReciever which extends Broadcast reciever which has the oneRecieve method overridenen where it recieves the content and intent which raised this alarm , and then we take the intent and then maybe raise another 
+intent which actually starts the service 
+
+103. Now to actually set the alamr, do a an intent - new intent (Broadcast reiever class ) and then as per need putExtra in the intent and then make a pending intent by pending intent= Pendingintent.getBraodcast(context,reciever code, alarmIntent, flag to specify if alarm goes on shot or many times eg PendingIntent.FLAG_ONE_SHOT), then make the alarmmananger which is does by getActivty().getSystemSErvice(Contenxt.ALARm_SERVICE) , now doa  set method , alarm.set(Alarmmaner.RTC_WAKEUP - this tells when to wake up the alarm ie the type of alarm it is ie when the screen turns on ,time to set off the alarm - system.currentTimeInmillis+5000milliseconds , pendingn intent operation to perform )
