@@ -41,6 +41,9 @@
             android:authorities="borax12.com.shine.app"
             android:name=".data.WeatherProvider"/>
 
+        <service android:name=".service.ShineService"/>
+        <receiver android:name=".service.ShineService$AlarmReceiver" android:enabled="true"/>
+
     </application>
 
 </manifest>
