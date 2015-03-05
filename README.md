@@ -208,3 +208,9 @@ Application to understand android platform specifics
 intent which actually starts the service 
 
 103. Now to actually set the alamr, do a an intent - new intent (Broadcast reiever class ) and then as per need putExtra in the intent and then make a pending intent by pending intent= Pendingintent.getBraodcast(context,reciever code, alarmIntent, flag to specify if alarm goes on shot or many times eg PendingIntent.FLAG_ONE_SHOT), then make the alarmmananger which is does by getActivty().getSystemSErvice(Contenxt.ALARm_SERVICE) , now doa  set method , alarm.set(Alarmmaner.RTC_WAKEUP - this tells when to wake up the alarm ie the type of alarm it is ie when the screen turns on ,time to set off the alarm - system.currentTimeInmillis+5000milliseconds , pendingn intent operation to perform )
+
+104. The best approach for data transfer is to weigh the difference between payload vs download times in chunks 
+
+105. to make efficient data transfers , minimze state transitions , prefecct 2- 5 mins of data , batch non - time critical transfers , bundle time sensitive /time insensitive transfers 
+
+106. Sync Manger fram
