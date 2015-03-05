@@ -1,17 +1,22 @@
-package borax12.com.shine.service;
+package borax12.com.shine.sync;
 
-import android.app.IntentService;
-import android.content.BroadcastReceiver;
+import android.accounts.Account;
+import android.accounts.AccountManager;
+import android.content.AbstractThreadedSyncAdapter;
+import android.content.ContentProviderClient;
+import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
+import android.content.SyncRequest;
+import android.content.SyncResult;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
 import android.text.format.Time;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,27 +30,33 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Vector;
 
+import borax12.com.shine.R;
+import borax12.com.shine.Utility;
 import borax12.com.shine.data.WeatherContract;
 
 /**
  * Created by borax12 on 3/5/2015.
  */
-public class ShineService extends IntentService {
+public class ShineSyncAdapter extends AbstractThreadedSyncAdapter {
 
-    private ArrayAdapter<String> mForecastAdapter;
+    public final String LOG_TAG = ShineSyncAdapter.class.getSimpleName();
     private Context mContext ;
-    public static final String LOCATION_QUERY_EXTRA = "lqe";
-    private final String LOG_TAG = ShineService.class.getSimpleName();
+    // Interval at which to sync with the weather, in milliseconds.
+    // 60 seconds (1 minute) * 180 = 3 hours
+    public static final int SYNC_INTERVAL = 10;
+    public static final int SYNC_FLEXTIME = SYNC_INTERVAL/3;
 
-    public ShineService() {
-        super("ShineService");
+    public ShineSyncAdapter(Context context, boolean autoInitialize) {
+        super(context, autoInitialize);
     }
 
     @Override
-    protected void onHandleIntent(Intent intent) {
+    public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
 
-        String locationQuery = intent.getStringExtra(LOCATION_QUERY_EXTRA);
-        mContext=this;
+        Log.d(LOG_TAG,"Starting Sync");
+
+        String locationQuery = Utility.getPreferredLocation(getContext());
+        mContext=getContext();
 
         // These two need to be declared outside the try/catch
         // so that they can be closed in the finally block.
@@ -129,6 +140,59 @@ public class ShineService extends IntentService {
             }
         }
 
+
+    }
+
+    /**
+     * Helper method to have the sync adapter sync immediately
+     * @param context The context used to access the account service
+     */
+    public static void syncImmediately(Context context) {
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
+        bundle.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
+        ContentResolver.requestSync(getSyncAccount(context),
+                context.getString(R.string.content_authority), bundle);
+    }
+
+    /**
+     * Helper method to get the fake account to be used with SyncAdapter, or make a new one
+     * if the fake account doesn't exist yet.  If we make a new account, we call the
+     * onAccountCreated method so we can initialize things.
+     *
+     * @param context The context used to access the account service
+     * @return a fake account.
+     */
+    public static Account getSyncAccount(Context context) {
+        // Get an instance of the Android account manager
+        AccountManager accountManager =
+                (AccountManager) context.getSystemService(Context.ACCOUNT_SERVICE);
+
+        // Create the account type and default account
+        Account newAccount = new Account(
+                context.getString(R.string.app_name), context.getString(R.string.sync_account_type));
+
+        // If the password doesn't exist, the account doesn't exist
+        if ( null == accountManager.getPassword(newAccount) ) {
+
+        /*
+         * Add the account and account type, no password or user data
+         * If successful, return the Account object, otherwise report an error.
+         */
+            if (!accountManager.addAccountExplicitly(newAccount, "", null)) {
+                return null;
+            }
+            /*
+             * If you don't set android:syncable="true" in
+             * in your <provider> element in the manifest,
+             * then call ContentResolver.setIsSyncable(account, AUTHORITY, 1)
+             * here.
+             */
+            onAccountCreated(newAccount, context);
+
+
+        }
+        return newAccount;
     }
 
     private void getWeatherDataFromJson(String forecastJsonStr,String locationSetting)throws JSONException {
@@ -324,15 +388,44 @@ public class ShineService extends IntentService {
         return locationId;
     }
 
-    public static class AlarmReceiver extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Intent sendIntent = new Intent(context, ShineService.class);
-            sendIntent.putExtra(ShineService.LOCATION_QUERY_EXTRA, intent.getStringExtra(ShineService.LOCATION_QUERY_EXTRA));
-            context.startService(sendIntent);
-
+    /**
+     * Helper method to schedule the sync adapter periodic execution
+     */
+    public static void configurePeriodicSync(Context context, int syncInterval, int flexTime) {
+        Account account = getSyncAccount(context);
+        String authority = context.getString(R.string.content_authority);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            // we can enable inexact timers in our periodic sync
+            SyncRequest request = new SyncRequest.Builder().
+                    setExtras(new Bundle()).
+                    syncPeriodic(syncInterval, flexTime).
+                    setSyncAdapter(account, authority).build();
+            ContentResolver.requestSync(request);
+        } else {
+            ContentResolver.addPeriodicSync(account,
+                    authority, new Bundle(), syncInterval);
         }
     }
 
+    private static void onAccountCreated(Account newAccount, Context context) {
+        /*
+         * Since we've created an account
+         */
+        ShineSyncAdapter.configurePeriodicSync(context, SYNC_INTERVAL, SYNC_FLEXTIME);
+
+        /*
+         * Without calling setSyncAutomatically, our periodic sync will not be enabled.
+         */
+        ContentResolver.setSyncAutomatically(newAccount, context.getString(R.string.content_authority), true);
+
+        /*
+         * Finally, let's do a sync to get things started
+         */
+        syncImmediately(context);
+    }
+
+
+    public static void initializeSyncAdapter(Context context) {
+        getSyncAccount(context);
+    }
 }
