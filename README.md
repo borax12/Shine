@@ -229,3 +229,21 @@ intent which actually starts the service
 113. You can also have one method in the syncAdapter class to get the syncAccount , where you get the AccountManager = (AccountManager) context.getSystemService(Context.ACCOUNT_SERVICE) , and then make a new Account by Account account - new Account(account name ,account type) , to check if an account has already been created do a check (null==accountManager.getpassword(account)) - if this true then this is a new account , the to actually add the account accountManager.addAccountExplicity(account,passwordm,userData)
 
 114. SyncService which extends Service class provides framework access to the adapter , this will a private static final Object syncAdapterLock = new Object() , also a member variable of the SyncAdapter , now in the overriden OnCreate method do a thread safe operation ie in a synchronized(object) block ie if the syncadapter has not been initialized ie the syncadapter == null , then make a new SyncAdapter ) , in the overriden IBinder onBind (intent) , retunr the syncadaptetr.getSyncAdapterBinder()
+
+115. for the sink to happen , you need to have these xmls in the xml foolder in the res - authenticator.xml , syncadapter.xml 
+116. The authenticator xml provides meta data to the syncadapter -<account-authenticator  accountType =name of package, icon, label, smallIcon) 
+
+117. The syncadapter xml defines the settings assoicaated with the syncadapter , <sync-adapter contentauthority,accounttyep,SupportsUploading,userVisible,allowParallelSyncs,isAlwaysSyncable=true)
+
+118. To perform syncs especially to use the SyncRequest Builder -you need the sync permisions , <uses-permision name = android.persmisison.READ_SYNC_SETTINGS , and <uses-ermisson name- WRITE_SYNC_SETTINGS and also AUTHENTICATE_ACCOUNTS,
+
+119. For making the content provider attach to the sycn adaptes , the provider needs to have android:exported= false, and android:syncable=true 
+
+120. The authenticator service and sync servuce needs to added the manifest and the authenticate service will have an intent filter to listen to android.AccountAuthentticatorin the action tag of intent filter , and service will also have the meta data tag with the items name = andoir.accountAuthenticator and the resource to be used is @xml/authenticator 
+
+121. the sync serrvice will need the service tag with the name as sync.Service name where sync is our package in the directory and also the exported :true needs to be set for this service as this sync service is open to the sycn manager of android , also this iwll also have a meta-data tag with the name as android.content.Syncadapter and the resource as @xml/syncadapter and also an intent filter with the action of name = android.content.syncadapter 
+
+122. To immediately sync use ContentResolver.requestSync(authroity, bundle of extras that should have the EXTRAS_SYNC_EXPEDIED and EXTRAS_SYNC_MANUAL set to True
+
+123. for scheduled synchroniszation , set some time interval constants a- syncInterval and flexiTime as one third of syncInterval , now create a method configurePeriodicSync that takes the context and the syncInerval and the flexiTime. In this method getSyncACcount(contenxt) and the authroity , and now one way of making periodic syncs is basied on build version codes , if the device is greater than kitkat then make a syncrequest with the ability of the flexi time - like this - SyncRequest requesst = new SyncRequest.Builder.setExtras(new Bundle()).syncPeriod(syncinterval,flexitime).setSyncadapter(account, autority, bundle).build()
+
