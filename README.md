@@ -187,3 +187,20 @@ Application to understand android platform specifics
 92. Some other properties are textSize, textColor , layout-gravity and minWidth and font-family 
 
 93. For accesibilty checlist - always add contentDescription iof uimages /iconsViews
+
+94.An Async Task is linked to an activity , so when the ondestroy of the activity is called , a new thread of the asyntask is instantiated , so its not a best pattern for background data fetching , as the constatn new thread creation on OnDestroy beingf called for the activity eats up processing power and keeps it alive 
+
+95. Service lifecycle - Myservice extends Service -m it will onveride onCreate, onDestroy and a special method onStartCommand - this takes the intent , the flags and the startId and does the task and then returns an int - SERVICE _START_NOT_STICKy , , it also will ovverrid Ibinder onBind (intent)- the onStartCommand signals the android runtime that the app containing the service should be given higher app priority
+
+96. To tell that service should be running in the foreground , doa  startForeground(notification) in the onstartCommand method 
+
+97. Service runs on the main thread , so avoid long operations on that , rather use Background threads to do that ,for taht purpose m, we have the IntentService classs , which has the method onHandleIntent(Intent) 
+
+98. Also the service components need to added in the manifest , do start the service form a method , do this intent = new Intent (service class) , then do a getActivty().startService(intent)
+
+99. Alarms are used to wake up the application after a certain period of time and then do some processing 
+
+100. So essentially the component we wake in the app by alarms is a braodcast reiever , 
+
+101. Alarms take advantage of a new Intent called pending Intent , the pending intent gives permision to send data with the same ppplication id as the one sending the intent , and it does this in a asnychornous way m the pending intent talks to the broadcast reciever with the help of alarm manager 
+102. 
