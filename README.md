@@ -245,5 +245,9 @@ intent which actually starts the service
 
 122. To immediately sync use ContentResolver.requestSync(authroity, bundle of extras that should have the EXTRAS_SYNC_EXPEDIED and EXTRAS_SYNC_MANUAL set to True
 
-123. for scheduled synchroniszation , set some time interval constants a- syncInterval and flexiTime as one third of syncInterval , now create a method configurePeriodicSync that takes the context and the syncInerval and the flexiTime. In this method getSyncACcount(contenxt) and the authroity , and now one way of making periodic syncs is basied on build version codes , if the device is greater than kitkat then make a syncrequest with the ability of the flexi time - like this - SyncRequest requesst = new SyncRequest.Builder.setExtras(new Bundle()).syncPeriod(syncinterval,flexitime).setSyncadapter(account, autority, bundle).build()
+123. for scheduled synchroniszation , set some time interval constants a- syncInterval and flexiTime as one third of syncInterval , now create a method configurePeriodicSync that takes the context and the syncInerval and the flexiTime. In this method getSyncACcount(contenxt) and the authroity , and now one way of making periodic syncs is basied on build version codes , if the device is greater than kitkat then make a syncrequest with the ability of the flexi time - like this - SyncRequest requesst = new SyncRequest.Builder.setExtras(new Bundle()).syncPeriod(syncinterval,flexitime).setSyncadapter(account, autority, bundle).build(), then doa a contenResolver.requestSync(request) else for lower end phones make it sumply  Contentresolver.PeriodicSync(account,authority,new Bundle(),syncinterval)
+
+124. When the first Time an account is created , lets say tat the its created first time in getSyncAccount() then onAccountCreated do a Yoursycnadapter.configurePeriodicSync(context,account,syninterval) // your own method which is careted - check 123 point , and the ContentResolver.setSyncAutomatically(new Account,content authroity, true) and just once syncImmediately 
+
+
 
