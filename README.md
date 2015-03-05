@@ -213,4 +213,17 @@ intent which actually starts the service
 
 105. to make efficient data transfers , minimze state transitions , prefecct 2- 5 mins of data , batch non - time critical transfers , bundle time sensitive /time insensitive transfers 
 
-106. Sync Manger fram
+106. Sync Manger framework  allows for best practices in the data transfers domain.
+
+107. SyncAdapters manage all data transfers and also the syncManger batches and timeshifts data transfres ,queues the data transfrs , they also tie up with the accountmanager to help sync the data 
+
+108. for implementing a sync adapter we need all this - authenticator calss , authenticator service class,synadapter class , syncservice class
+
+109. The authenticator class extends the AbstractAccountAuthenticator - it will override the editproperties , add account , constructor methods 
+
+110. Authenticator service extends the service class and it needs to override the onCreate , and onBind methods , the on Bind (intent) method is used for usstem to bind this service to the activity or resource making the RPC , 
+
+111. The syncAdapter extends the AbstractThreadedSyncAdapter and the methods to ovverride is onPerformSunc which tells what happends on sync - ie the data fetching , and even if you dont have an account for the sync service , yuou need to create a duymmy account as well , 
+112. The syncadapter class can have one method to immediately sync data - which will create a bundle , put tje arguments for Bundle.putBoolean(ContentResolver.SYNC_EXTRAS_EXPITED, true) and bundle.putBollean(ContentResolver.SYNC_EXTRAS_MANUAL,true), then contentResolver.requestSync(context,authroity,bundle) this will make the syncimmediately happen - this can be called from the main activity on launch
+
+113. You can also have one method in the syncAdapter class to get the syncAccount , where you get the AccountManager = (AccountManager) context.getSystemService(Context.ACCOUNT_SERVICE) , and then make a new Account by Account account - new Account(account name ,account type) , to check if an account has already been created do a check (null==accountManager.getpassword(account)) - if this true then this is a new account , the to actually add the account accountManager.addAccountExplicity(account,passwordm)
