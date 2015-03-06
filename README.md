@@ -250,3 +250,24 @@ intent which actually starts the service
 124. When the first Time an account is created , lets say tat the its created first time in getSyncAccount() then onAccountCreated do a Yoursycnadapter.configurePeriodicSync(context,account,syninterval) // your own method which is careted - check 123 point , and the ContentResolver.setSyncAutomatically(new Account,content authroity, true) and just once syncImmediately 
 
 
+125. for making notifications , add a notification string format if you want in the string xml 
+
+126. if the data you are showing on the notification is to be pulled from a adatabase then you have to aslo add a projection string array for the queries to run , so createa a string array of the projection with the entires being the coloums you want from the table , these will be stored generally in the contract enttry classes for each table . You would also want to stroe the respect column indices also 
+
+127. you also need to provide a notfication id while creating the notification ot the notification manager 
+
+128. So generally a helper method can be created to create the notification , it will basically check if the notifcation is already shown , this could be done by storeing the last sync time into the sharedprefernces and then later getting the lastnotification sync time from the shared prefs and then check the duration passed since then , if its more than a specified time , lets say a day , then yes show the notificaatoin again
+
+129. So to query the data base you would need the uri and then geta  curosr from the contentresolver and use the query function with the projection added.
+
+130. To actually build the notification , use the NotificationCompat.Builder which will be initilize to new NotificationCompat.Builder(getContext()).setSmallIcon.setContentTitle.SetContentTE
+
+131. To to aritifically develop a backstack for an anction , lets say the notification being cliked to go to the main activity and then reutrnning back to the home screen , for this first the NotificationCompat.Buuilder mBuilder = make the notifcation builder from point 130,  create the intent which opens the acitivty intent resultIntent = new Intent(cintext, MainAcitivyt.class),  TaskStackBuilder stackbuilder = TaskBuilder.create(context) , stackbuilder.addNextIntent(resultIntent) , create a wrapping pending intent around this - Pendingintent pendingintent = stackbuilder.getPendingIntent(Int requestCode, pendingIntent.FLAG_UPDATE_CURREN - this flag updates the existing pending intent and writes over it ) , then mBuilder.setContentIntent(pendingintent) , then NotificationManager nm - getContext.getSystemService(Context.NOTIFICATION_SERVICE) and the use nm.notify(notificationid,mbuilder.build()), 
+
+132. Notification Manager runs in its own thread , doesnt affect UI Thread 
+
+133. Toggling notification , first add some strings in the xml that will store some preference terms - perf-notiication-enabled key, pref-notfication-enabled - label , pref-notification -enabled value on , and valye off - ie true and false , and the pref-notification-default value
+
+134. then add a checkbox prefenrce to pref-general.xml with the title , key, summaryOn summaryOFf , default value , now in the mnotify method , fetch the valye from defaultSharedPreferences , if the boolean parsed is true ie notification should be enabled then only show the notificatin , 
+
+135. How to load images = Resources resource = context.getResources(), Bitmap image= Bitmap.decodeResource(resource,id of the image )
