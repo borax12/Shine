@@ -250,4 +250,3 @@ intent which actually starts the service
 124. When the first Time an account is created , lets say tat the its created first time in getSyncAccount() then onAccountCreated do a Yoursycnadapter.configurePeriodicSync(context,account,syninterval) // your own method which is careted - check 123 point , and the ContentResolver.setSyncAutomatically(new Account,content authroity, true) and just once syncImmediately 
 
 
-
